@@ -1,6 +1,9 @@
 package com.example.ejerciciofacturacion;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,15 +22,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private AdminSQLiteOpenHelper admin;
     private Button button;
     private TableLayout tabla;
-    private TableRow row;
-    private TextView id;
-    private TextView nombre;
-    private TextView precio;
-    private TextView cantidad;
-    private TextView descuento;
-    private TextView total;
+
     private String datos [];
 
     private EditText ide1;
@@ -43,13 +43,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
+        admin = new AdminSQLiteOpenHelper(this,"bd1",null,1);
         ide1 = findViewById(R.id.id1);
         nom1 = findViewById(R.id.nombre1);
         pre1 = findViewById(R.id.precio1);
         cant1 = findViewById(R.id.cantidad1);
         des1 = findViewById(R.id.descuento1);
         tabla = findViewById(R.id.tb);
+        consulta();
 
             ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -59,10 +60,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void presion(View v){
-        row = new TableRow(this);
-        String variable = String.valueOf(contador);
+        //String variable = String.valueOf(contador);
 
-        id = new TextView(this);
+        /*id = new TextView(this);
         id.setText("001");
         id.setLayoutParams(new TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,1));
 
@@ -83,35 +83,106 @@ public class MainActivity extends AppCompatActivity {
         descuento.setLayoutParams(new TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,1));
 
         total = new TextView(this);
-        total.setText("9999");
-        total.setLayoutParams(new TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,1));
+        total.setText("9999");*/
+        agregar();
 
-        row.addView(id);
-        row.addView(nombre);
-        row.addView(precio);
-        row.addView(cantidad);
-        row.addView(descuento);
-        row.addView(total);
 
-        datos = new String[]{id.getText().toString(), nombre.getText().toString(), precio.getText().toString(), cantidad.getText().toString(), descuento.getText().toString(), total.getText().toString()};
 
-        row.setTag(datos);
-        tabla.addView(row);
 
-        row.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String [] datitos = (String[]) v.getTag();
-                contador = contador+1;
-                ide1.setText(datitos[0]);
-                nom1.setText(datitos[1]);
+        //tabla.addView(row);
 
-                pre1.setText(datitos[2]);
-                cant1.setText(datitos[3]);
-                des1.setText(datitos[4]);
+
+
+    }
+
+    public void agregar (){
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        ContentValues registro = new ContentValues();
+
+        registro.put("Nombre",nom1.getText().toString());
+        registro.put("Precio",Integer.parseInt(pre1.getText().toString()));
+        registro.put("Cantidad",Integer.parseInt(cant1.getText().toString()));
+        registro.put("Descuento",Integer.parseInt(des1.getText().toString()));
+        bd.insert("mercaderia",null,registro);
+        Toast.makeText(this,"datos enviados",Toast.LENGTH_SHORT).show();
+        bd.close(); //recordar comentar esto para el inspector
+        consulta();
+
+    }
+    public void consulta(){
+        String id;
+        String nombre;
+        int precio;
+        int cantidad;
+        int descuento;
+        SQLiteDatabase bd = admin.getReadableDatabase();
+        Cursor cursor= bd.rawQuery("select ID,Nombre,Precio,Cantidad,Descuento from mercaderia where descuento != 999",null);
+        tabla.removeAllViews(); //limpiamos tabla
+        if (cursor.moveToFirst()){//si hay datos movete al primero en la db
+            while(!cursor.isAfterLast()){
+                TableRow row = new TableRow(this);
+
+                for (int i = 0;i<cursor.getColumnCount();i++){
+                    TextView tv = new TextView(this);
+                    Object valor = cursor.getString(i);
+                    tv.setText(valor.toString());
+                    tv.setLayoutParams(new TableRow.LayoutParams(0,ViewGroup.LayoutParams.WRAP_CONTENT,1));
+                    row.addView(tv);}
+
+
+                    id = cursor.getString(0);
+                    nombre= cursor.getString(1);
+                    precio= Integer.parseInt(cursor.getString(2));
+                    cantidad= Integer.parseInt(cursor.getString(3));
+                    descuento= Integer.parseInt(cursor.getString(4));
+
+                    datos = new String[]{id, nombre, String.valueOf(precio), String.valueOf(cantidad), String.valueOf(descuento)};
+                    row.setTag(datos);
+
+                tabla.addView(row); // agregar la fila a la tabla
+
+                row.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String [] datitos = (String[]) v.getTag();
+                        contador = contador+1;
+                        ide1.setText(datitos[0]);
+                        nom1.setText(datitos[1]);
+
+                        pre1.setText(datitos[2]);
+                        cant1.setText(datitos[3]);
+                        des1.setText(datitos[4]);
+
+
+                    }
+                });
+                cursor.moveToNext(); // avanzar al siguiente registr
 
             }
-        });
+
+
+        }
+        else{
+            Toast.makeText(this, "No hay datos", Toast.LENGTH_SHORT).show();
+        }
+
+        cursor.close();
+        bd.close();
+
+
+    }
+    public void borrar (){
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        ContentValues registro = new ContentValues();
+        //int desc = des1.getText().toString();
+        registro.put("Nombre",nom1.getText().toString());
+        registro.put("Precio",Integer.parseInt(pre1.getText().toString()));
+        registro.put("Cantidad",Integer.parseInt(cant1.getText().toString()));
+        registro.put("Descuento",Integer.parseInt(des1.getText().toString()));
+        Toast.makeText(this, "aaaa", Toast.LENGTH_SHORT).show();
+
+        //int filas = bd.update("mercaderia",registro,"Nombre = 'tito'",null);
+        bd.close();
     }
 
 
