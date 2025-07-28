@@ -116,17 +116,17 @@ public class MainActivity extends AppCompatActivity {
         int cantidad;
         int descuento;
         SQLiteDatabase bd = admin.getReadableDatabase();
-        Cursor cursor= bd.rawQuery("select ID,Nombre,Precio,Cantidad,Descuento from mercaderia where descuento != 999",null);
+        Cursor cursor= bd.rawQuery("select ID,Nombre,Precio,Cantidad,Descuento from mercaderia where descuento != 9999",null);
         tabla.removeAllViews(); //limpiamos tabla
         if (cursor.moveToFirst()){//si hay datos movete al primero en la db
-            while(!cursor.isAfterLast()){
+            while(!cursor.isAfterLast()){ //mientras cursor no este en el ultimo
                 TableRow row = new TableRow(this);
 
                 for (int i = 0;i<cursor.getColumnCount();i++){
                     TextView tv = new TextView(this);
                     Object valor = cursor.getString(i);
                     tv.setText(valor.toString());
-                    tv.setLayoutParams(new TableRow.LayoutParams(0,ViewGroup.LayoutParams.WRAP_CONTENT,1));
+                    tv.setLayoutParams(new TableRow.LayoutParams(0,ViewGroup.LayoutParams.WRAP_CONTENT,1));//creas un layout con contenido en codigo en lugar de xml
                     row.addView(tv);}
 
 
@@ -140,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
                     row.setTag(datos);
 
                 tabla.addView(row); // agregar la fila a la tabla
-
                 row.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -171,7 +170,22 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public void borrar (){
+    public void borrar (View v){
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        ContentValues registro = new ContentValues();
+        //int desc = des1.getText().toString();
+        //registro.put("Nombre",nom1.getText().toString());
+        //registro.put("Precio",Integer.parseInt(pre1.getText().toString()));
+        //registro.put("Cantidad",Integer.parseInt(cant1.getText().toString()));
+        registro.put("Descuento",9999);
+        Toast.makeText(this, "borrado", Toast.LENGTH_SHORT).show();
+        String[] args = { String.valueOf(ide1.getText()) };
+        int filas = bd.update("mercaderia",registro,"ID = ?",args);
+        bd.close();
+        consulta();
+    }
+
+    public void modificar (View v){
         SQLiteDatabase bd = admin.getWritableDatabase();
         ContentValues registro = new ContentValues();
         //int desc = des1.getText().toString();
@@ -179,10 +193,11 @@ public class MainActivity extends AppCompatActivity {
         registro.put("Precio",Integer.parseInt(pre1.getText().toString()));
         registro.put("Cantidad",Integer.parseInt(cant1.getText().toString()));
         registro.put("Descuento",Integer.parseInt(des1.getText().toString()));
-        Toast.makeText(this, "aaaa", Toast.LENGTH_SHORT).show();
-
-        //int filas = bd.update("mercaderia",registro,"Nombre = 'tito'",null);
+        Toast.makeText(this, "modificado"+ide1.getText().toString(), Toast.LENGTH_SHORT).show();
+        String[] args = { String.valueOf(ide1.getText()) };
+        int filas = bd.update("mercaderia",registro,"ID = ?",args);
         bd.close();
+        consulta();
     }
 
 
