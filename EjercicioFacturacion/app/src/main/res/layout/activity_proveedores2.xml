@@ -60,52 +60,6 @@
             app:cornerRadius="0dp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button21"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:onClick="pestania_inventarios"
-        android:text="Inventario"
-        android:textSize="12sp"
-        app:cornerRadius="0dp" />
-
-    <Button
-        android:id="@+id/clientess2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Clientes"
-        android:textSize="12sp"
-        app:cornerRadius="0dp" />
-
-    <Button
-        android:id="@+id/button22"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Proveedores"
-        android:textSize="12sp"
-        app:cornerRadius="0dp" />
-
-    <Button
-        android:id="@+id/button23"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="facturacion"
-        android:textSize="12sp"
-        app:cornerRadius="0dp" />
-
-    <Button
-        android:id="@+id/button24"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="cerrar sesion"
-        android:textSize="12sp"
-        app:cornerRadius="0dp" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -176,14 +130,14 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView25"
+            android:id="@+id/textView225"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Domicilio" />
 
         <EditText
-            android:id="@+id/Campo4"
+            android:id="@+id/Campo42"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"

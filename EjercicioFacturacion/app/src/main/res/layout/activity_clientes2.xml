@@ -62,52 +62,6 @@
             app:cornerRadius="0dp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Inventario"
-        android:textSize="12sp"
-        app:cornerRadius="0dp" />
-
-    <Button
-        android:id="@+id/clientess"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:onClick="Pestania_clientes"
-        android:text="Clientes"
-        android:textSize="12sp"
-        app:cornerRadius="0dp" />
-
-    <Button
-        android:id="@+id/button15"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Proveedores"
-        android:textSize="12sp"
-        app:cornerRadius="0dp" />
-
-    <Button
-        android:id="@+id/button16"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="facturacion"
-        android:textSize="12sp"
-        app:cornerRadius="0dp" />
-
-    <Button
-        android:id="@+id/button17"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="cerrar sesion"
-        android:textSize="12sp"
-        app:cornerRadius="0dp" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -178,14 +132,14 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView25"
+            android:id="@+id/textView225"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Domicilio" />
 
         <EditText
-            android:id="@+id/Campo4"
+            android:id="@+id/Campo42"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
@@ -235,13 +189,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="ID" />
 
         <TextView
             android:id="@+id/textView12"
