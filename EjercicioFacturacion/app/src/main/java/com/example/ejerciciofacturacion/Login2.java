@@ -23,6 +23,14 @@ public class Login2 extends AppCompatActivity {
     public void inicio_sesion(View v){
         Intent intento = new Intent(this, MainActivity.class);
         startActivity(intento);
+        finish();
+
+    }
+
+    public void Registro (View v){
+        Intent intento = new Intent(this,Registro.class);
+        startActivity(intento);
+        finish();
 
     }
 }

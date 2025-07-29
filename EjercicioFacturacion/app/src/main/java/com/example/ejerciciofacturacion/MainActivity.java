@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         int cantidad;
         int descuento;
         SQLiteDatabase bd = admin.getReadableDatabase();
-        Cursor cursor= bd.rawQuery("select ID,Nombre,Precio,Cantidad,Descuento from mercaderia where descuento != 9999",null);
+        Cursor cursor= bd.rawQuery("select ID_Mercaderia,Nombre,Precio,Cantidad,Descuento from mercaderia where descuento != 9999",null);
         tabla.removeAllViews(); //limpiamos tabla
         if (cursor.moveToFirst()){//si hay datos movete al primero en la db
             while(!cursor.isAfterLast()){ //mientras cursor no este en el ultimo
@@ -131,14 +131,14 @@ public class MainActivity extends AppCompatActivity {
                     row.addView(tv);}
 
 
-                    id = cursor.getString(0);
-                    nombre= cursor.getString(1);
-                    precio= Integer.parseInt(cursor.getString(2));
-                    cantidad= Integer.parseInt(cursor.getString(3));
-                    descuento= Integer.parseInt(cursor.getString(4));
+                id = cursor.getString(0);
+                nombre= cursor.getString(1);
+                precio= Integer.parseInt(cursor.getString(2));
+                cantidad= Integer.parseInt(cursor.getString(3));
+                descuento= Integer.parseInt(cursor.getString(4));
 
-                    datos = new String[]{id, nombre, String.valueOf(precio), String.valueOf(cantidad), String.valueOf(descuento)};
-                    row.setTag(datos);
+                datos = new String[]{id, nombre, String.valueOf(precio), String.valueOf(cantidad), String.valueOf(descuento)};
+                row.setTag(datos);
 
                 tabla.addView(row); // agregar la fila a la tabla
                 row.setOnClickListener(new View.OnClickListener() {

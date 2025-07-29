@@ -75,7 +75,7 @@
             android:text="Nombre" />
 
         <EditText
-            android:id="@+id/campo1"
+            android:id="@+id/Campo1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
@@ -139,7 +139,7 @@
             android:text="Domicilio" />
 
         <EditText
-            android:id="@+id/Campo42"
+            android:id="@+id/Campo4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
@@ -224,6 +224,7 @@
         android:layout_height="match_parent">
 
         <TableLayout
+            android:id="@+id/tbc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

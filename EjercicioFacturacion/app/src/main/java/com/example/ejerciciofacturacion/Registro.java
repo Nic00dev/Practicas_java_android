@@ -1,6 +1,8 @@
 package com.example.ejerciciofacturacion;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,5 +17,16 @@ public class Registro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_registro);
+    }
+
+    public void Registrado (View v){
+
+        Intent intento = new Intent(this,Login2.class);
+        startActivity(intento);
+
+        finish();
+
+
+
     }
 }
