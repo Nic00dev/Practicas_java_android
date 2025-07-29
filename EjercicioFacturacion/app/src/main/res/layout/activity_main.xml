@@ -24,10 +24,11 @@
             app:cornerRadius="0dp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/Clientess"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="Pestania_clientes"
             android:text="Clientes"
             android:textSize="12sp"
             app:cornerRadius="0dp" />
@@ -37,6 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="Pestania_proveedores"
             android:text="Proveedores"
             android:textSize="12sp"
             app:cornerRadius="0dp" />
@@ -55,6 +57,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="cerrar_sesion"
             android:text="cerrar sesion"
             android:textSize="12sp"
             app:cornerRadius="0dp" />

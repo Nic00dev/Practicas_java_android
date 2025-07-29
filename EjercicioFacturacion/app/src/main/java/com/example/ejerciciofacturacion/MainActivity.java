@@ -2,6 +2,7 @@ package com.example.ejerciciofacturacion;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -198,6 +199,32 @@ public class MainActivity extends AppCompatActivity {
         int filas = bd.update("mercaderia",registro,"ID = ?",args);
         bd.close();
         consulta();
+
+    }
+
+    public void Pestania_clientes(View v){
+        Intent intento = new Intent(this,Clientes2.class);
+        startActivity(intento);
+        finish();
+
+    }
+
+    public void Pestania_proveedores(View v){
+        Intent intento = new Intent(this,Proveedores2.class);
+        startActivity(intento);
+        finish();
+
+    }
+//    public void Pestania_facturacion(View v){
+//        Intent intento = new Intent(this,Clientes2.class);
+//        startActivity(intento);
+//
+//
+//    }
+    public void cerrar_sesion(View v){
+        finish();
+
+
     }
 
 

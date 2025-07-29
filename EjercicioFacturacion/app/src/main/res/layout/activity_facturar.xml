@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Facturar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button25"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="pestania_inventarios"
+            android:text="Inventario"
+            android:textSize="12sp"
+            app:cornerRadius="0dp" />
+
+        <Button
+            android:id="@+id/clientess3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Clientes"
+            android:textSize="12sp"
+            app:cornerRadius="0dp" />
+
+        <Button
+            android:id="@+id/button26"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="Pestania_proveedores"
+            android:text="Proveedores"
+            android:textSize="12sp"
+            app:cornerRadius="0dp" />
+
+        <Button
+            android:id="@+id/button27"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="facturacion"
+            android:textSize="12sp"
+            app:cornerRadius="0dp" />
+
+        <Button
+            android:id="@+id/button28"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="cerrar_sesion"
+            android:text="cerrar sesion"
+            android:textSize="12sp"
+            app:cornerRadius="0dp" />
+    </LinearLayout>
+</LinearLayout>

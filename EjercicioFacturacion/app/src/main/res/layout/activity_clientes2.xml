@@ -8,6 +8,107 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="pestania_inventarios"
+            android:text="Inventario"
+            android:textSize="12sp"
+            app:cornerRadius="0dp" />
+
+        <Button
+            android:id="@+id/Clientess"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Clientes"
+            android:textSize="12sp"
+            app:cornerRadius="0dp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="Pestania_proveedores"
+            android:text="Proveedores"
+            android:textSize="12sp"
+            app:cornerRadius="0dp" />
+
+        <Button
+            android:id="@+id/button14"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="facturacion"
+            android:textSize="12sp"
+            app:cornerRadius="0dp" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="cerrar_sesion"
+            android:text="cerrar sesion"
+            android:textSize="12sp"
+            app:cornerRadius="0dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Inventario"
+        android:textSize="12sp"
+        app:cornerRadius="0dp" />
+
+    <Button
+        android:id="@+id/clientess"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="Pestania_clientes"
+        android:text="Clientes"
+        android:textSize="12sp"
+        app:cornerRadius="0dp" />
+
+    <Button
+        android:id="@+id/button15"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Proveedores"
+        android:textSize="12sp"
+        app:cornerRadius="0dp" />
+
+    <Button
+        android:id="@+id/button16"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="facturacion"
+        android:textSize="12sp"
+        app:cornerRadius="0dp" />
+
+    <Button
+        android:id="@+id/button17"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="cerrar sesion"
+        android:textSize="12sp"
+        app:cornerRadius="0dp" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -20,7 +121,7 @@
             android:text="Nombre" />
 
         <EditText
-            android:id="@+id/editTextText9"
+            android:id="@+id/campo1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
@@ -41,7 +142,7 @@
             android:text="Apellido" />
 
         <EditText
-            android:id="@+id/editTextText10"
+            android:id="@+id/Campo2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
@@ -62,7 +163,7 @@
             android:text="Dni" />
 
         <EditText
-            android:id="@+id/editTextText14"
+            android:id="@+id/Campo3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
@@ -84,7 +185,7 @@
             android:text="Domicilio" />
 
         <EditText
-            android:id="@+id/editTextText15"
+            android:id="@+id/Campo4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
