@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -94,6 +95,48 @@ public class Clientes2 extends AppCompatActivity {
 
     }
 
+    public void busqueda (View v){
+        int ID;
+        String Nombre;
+        String Apellido;
+        int DNI;
+        String Domicilio;
+
+        SQLiteDatabase db = admin.getReadableDatabase();
+        String [] args ={c3.getText().toString()};
+        Cursor cursor = db.rawQuery("select ID_Cliente,Nombre,Apellido,DNI,Domicilio from clientes where (DNI != 9999 AND DNI = ?)",args);
+        tabla.removeAllViews();
+        if(cursor.moveToFirst()){
+            while(!cursor.isAfterLast()){
+                TableRow row = new TableRow(this);
+                for (int i = 0;i<cursor.getColumnCount();i++){
+                    TextView tv = new TextView(this);
+                    Object valor = cursor.getString(i);
+                    tv.setText(valor.toString());
+                    tv.setLayoutParams(new TableRow.LayoutParams(0,ViewGroup.LayoutParams.WRAP_CONTENT,1));
+                    row.addView(tv);
+                }
+                ID = cursor.getInt(0); //esto lo hemos modificado
+                Nombre = cursor.getString(1);
+                Apellido = cursor.getString(2);
+                DNI = cursor.getInt(3);
+                Domicilio = cursor.getString(4);
+                datos = new String[]{String.valueOf(ID),Nombre,Apellido,String.valueOf(DNI),Domicilio};
+                row.setTag(datos);
+                tabla.addView(row);
+
+                cursor.moveToNext();
+            }
+            cursor.close();
+            db.close();
+
+        }
+        else{
+            Toast.makeText(this, "sin datos",Toast.LENGTH_SHORT).show();
+            consulta();
+        }
+    }
+
     public void agregar(View v){
         SQLiteDatabase db = admin.getWritableDatabase();
         ContentValues registro = new ContentValues();
@@ -123,6 +166,8 @@ public class Clientes2 extends AppCompatActivity {
         db.close();
         consulta();
     }
+
+
 
     public void modificar(View v) {
         SQLiteDatabase db = admin.getWritableDatabase();
