@@ -45,6 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="Pestania_facturacion"
             android:text="facturacion"
             android:textSize="12sp"
             app:cornerRadius="0dp" />
@@ -155,6 +156,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="agregar"
             android:text="+"
             app:cornerRadius="0dp" />
 
@@ -163,6 +165,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="borrado"
             android:text="-"
             app:cornerRadius="0dp" />
 
@@ -171,6 +174,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="modificar"
             android:text="mod"
             app:cornerRadius="0dp" />
 
@@ -179,6 +183,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="busqueda"
             android:text="buscar"
             app:cornerRadius="0dp" />
     </LinearLayout>
@@ -222,6 +227,7 @@
         android:layout_height="match_parent">
 
         <TableLayout
+            android:id="@+id/tb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

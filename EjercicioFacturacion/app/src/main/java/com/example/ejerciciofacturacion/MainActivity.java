@@ -215,12 +215,12 @@ public class MainActivity extends AppCompatActivity {
         finish();
 
     }
-//    public void Pestania_facturacion(View v){
-//        Intent intento = new Intent(this,Clientes2.class);
-//        startActivity(intento);
-//
-//
-//    }
+    public void Pestania_facturacion(View v){
+        Intent intento = new Intent(this,Facturar.class);
+        startActivity(intento);
+
+
+    }
     public void cerrar_sesion(View v){
         finish();
 

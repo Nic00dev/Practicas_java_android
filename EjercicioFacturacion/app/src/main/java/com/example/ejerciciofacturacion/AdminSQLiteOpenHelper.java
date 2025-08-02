@@ -18,6 +18,9 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("create table clientes (ID_Cliente INTEGER primary key AUTOINCREMENT,Nombre text,Apellido text,DNI INTEGER,Domicilio text)");
         db.execSQL("create table proveedores (ID_Proveedor INTEGER primary key AUTOINCREMENT,Nombre text,CUIT text,Domicilio text)");
         db.execSQL("create table usuarios (ID_Usuario INTEGER primary key AUTOINCREMENT,Usuario text,Password text)");
+        db.execSQL("create table ventas (ID INTEGER primary key AUTOINCREMENT,Nombre text,Precio INTEGER,Cantidad INTEGER,Descuento INTEGER,Total DOUBLE,Visible INTEGER)");
+
+
     }
 
     @Override

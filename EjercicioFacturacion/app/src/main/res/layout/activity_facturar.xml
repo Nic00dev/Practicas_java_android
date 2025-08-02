@@ -81,7 +81,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="numberSigned" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -102,7 +103,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="numberSigned" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -123,7 +125,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="numberSigned" />
 
     </LinearLayout>
 
@@ -145,7 +147,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="numberSigned" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -161,12 +164,13 @@
             android:text="Descuento" />
 
         <EditText
-            android:id="@+id/Campo4"
+            android:id="@+id/Campo5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="numberSigned" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -182,12 +186,13 @@
             android:text="Total" />
 
         <EditText
-            android:id="@+id/Campo4"
+            android:id="@+id/Campo6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="numberSigned" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -200,6 +205,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="agregar"
             android:text="+"
             app:cornerRadius="0dp" />
 
@@ -208,6 +214,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="borrar"
             android:text="-"
             app:cornerRadius="0dp" />
 
@@ -216,7 +223,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="mod"
+            android:onClick="modificar"
+            android:text="M"
             app:cornerRadius="0dp" />
 
         <Button
@@ -224,6 +232,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="cobro"
             android:text="$"
             app:cornerRadius="0dp" />
 
@@ -232,7 +241,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ticket"
+            android:onClick="borrartodo"
+            android:text="C"
+            app:cornerRadius="0dp" />
+
+        <Button
+            android:id="@+id/resul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#0D0D0D"
+            android:backgroundTint="#000000"
+            android:backgroundTintMode="add"
             android:textSize="13sp"
             app:cornerRadius="0dp" />
     </LinearLayout>
@@ -287,9 +307,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:backgroundTint="#040000">
 
         <TableLayout
+            android:id="@+id/tb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
