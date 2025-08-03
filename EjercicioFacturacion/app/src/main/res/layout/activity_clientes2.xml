@@ -218,7 +218,7 @@
             app:cornerRadius="0dp" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/facturame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
