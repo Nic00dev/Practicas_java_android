@@ -44,13 +44,43 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Llamamos a la función para crear el PDF con este texto
-                crearPDF("Este es el texto que irá en el PDF generado.");
+                crearPDF("C");
             }
         });
     }
 
+
     // Metodo para generar el pdf
     private void crearPDF(String texto) {
+        String original = "ORIGINAL";
+        String factura = "FACTURA";
+        String fecha_emision = "Fecha de emision";
+        String Cuit= "Cuit";
+        String Comprobante= "Comprobante";
+        String Inicio_Actividades= "Inicio Actividades";
+
+
+        String inscripcion_ingresos_brutos = "Inscripción Ingresos Brutos";
+        String razon_social = "Razón Social";
+        String domicilio = "Domicilio";
+        String telefono = "Teléfono";
+        String condicion_iva = "Condición frente al IVA";
+
+        String codigo = "Codigo";
+        String nombre = "Nombre";
+        String precio = "Precio";
+        String cantidad = "Cantidad";
+        String descuento = "Descuento";
+        String subtotal = "Subtotal";
+
+        String subtotaldescuento = "Subtotal Desc";
+        String precio1 = "$";
+        String precio2 = "$";
+        String total = "Total";
+
+
+
+
         // 1. Creamos un nuevo documento PDF
         PdfDocument documento = new PdfDocument();
 
@@ -65,12 +95,67 @@ public class MainActivity extends AppCompatActivity {
 
         // 5. Creamos una herramienta de dibujo para el texto (Paint)
         Paint paint = new Paint();
+        Paint Cuadrado = new Paint();
+        Paint categoria = new Paint();
 
         // 6. Definimos el tamaño del texto que vamos a dibujar
-        paint.setTextSize(16);
+        paint.setTextSize(12);
+        categoria.setTextSize(36);
+        Cuadrado.setStyle(Paint.Style.STROKE);
 
         // 7. Dibujamos el texto recibido como parámetro en la posición (x=80, y=100)
-        canvas.drawText(texto, 80, 100, paint);
+
+        canvas.drawText(texto, 295, 150,categoria); //C
+        canvas.drawText(original, 506, 210, paint); //original
+
+
+        //sector derecho
+        canvas.drawText(factura, 400, 118, paint);
+        canvas.drawText(fecha_emision, 300, 230, paint);
+        canvas.drawText(Comprobante, 300, 260, paint);
+        canvas.drawText(Cuit, 300, 290, paint);
+        canvas.drawText(Inicio_Actividades, 300, 320, paint);
+        canvas.drawText(inscripcion_ingresos_brutos, 300, 340, paint);
+
+        //sector izquierdo
+        canvas.drawText(razon_social, 0, 230, paint);
+        canvas.drawText(domicilio, 0, 260, paint);
+        canvas.drawText(telefono, 0, 290, paint);
+        canvas.drawText(condicion_iva, 0, 320, paint);
+
+        //leyendas
+        canvas.drawText(codigo, 0, 418, paint);
+        canvas.drawText(nombre, 127, 418, paint);
+        canvas.drawText(precio, 290, 418, paint);
+        canvas.drawText(cantidad, 366, 418, paint);
+        canvas.drawText(descuento, 441, 418, paint);
+        canvas.drawText(subtotal, 520, 418, paint);
+
+        //totales
+        canvas.drawText(subtotaldescuento, 280, 800, paint);
+        canvas.drawText(precio1, 366, 800, paint);
+        canvas.drawText(total, 456, 800, paint);
+        canvas.drawText(precio2, 521, 800, paint);
+
+
+
+
+        //verticales
+        canvas.drawLine(0,400,595,400,paint);
+        canvas.drawLine(0,438,595,438,paint);
+        canvas.drawLine(0,782,595,782,paint);
+        canvas.drawLine(0,842,595,842,paint);
+        //horizontales
+        canvas.drawLine(40,842,40,400,paint);
+        canvas.drawLine(280,842,280,400,paint);
+        canvas.drawLine(360,842,360,400,paint);
+        canvas.drawLine(440,842,440,400,paint);
+        canvas.drawLine(520,842,520,400,paint);
+        canvas.drawLine(300,400,300,400,paint);
+        canvas.drawRect(260, 103, 340, 183, Cuadrado);
+
+
+
 
         // 8. Terminamos la edición de la página actual para agregarla al documento
         documento.finishPage(pagina);
