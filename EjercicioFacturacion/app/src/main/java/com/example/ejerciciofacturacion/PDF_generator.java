@@ -2,8 +2,10 @@ package com.example.ejerciciofacturacion;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -26,46 +28,29 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
-public class PDF_generator extends AppCompatActivity {
-
-    private Button botonGenerar;
-
-    @SuppressLint("MissingInflatedId")
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_facturar); // carga el layout con el botón
-
-        // Asociamos el botón con su ID en el XML
-        botonGenerar = findViewById(R.id.facturame);
-
-        // Cuando el botón se presiona...
-        botonGenerar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Llamamos a la función para crear el PDF con este texto
-                crearPDF("C");
-            }
-        });
-    }
+public class PDF_generator {
 
 
-    // Metodo para generar el pdf
-    private void crearPDF(String texto) {
+
+    public void crearPDF(Context context, String texto, ArrayList<ArrayList<String>> tablita,String sumartotal) {
+
+
+
         String original = "ORIGINAL";
         String factura = "FACTURA";
-        String fecha_emision = "Fecha de emision";
-        String Cuit= "Cuit";
-        String Comprobante= "Comprobante";
-        String Inicio_Actividades= "Inicio Actividades";
+        String fecha_emision = "Fecha de emision: 4/8/2025";
+        String Cuit= "Cuit: 12-34-56";
+        String Comprobante= "Comprobante: Nº1";
+        String Inicio_Actividades= "Inicio Actividades: 4/8/2025";
 
 
-        String inscripcion_ingresos_brutos = "Inscripción Ingresos Brutos";
-        String razon_social = "Razón Social";
-        String domicilio = "Domicilio";
-        String telefono = "Teléfono";
-        String condicion_iva = "Condición frente al IVA";
+        String inscripcion_ingresos_brutos = "Inscripción Ingresos Brutos: 1234";
+        String razon_social = "Razón Social : TP Facturacion";
+        String domicilio = "Domicilio: Calle 123";
+        String telefono = "Teléfono: 123";
+        String condicion_iva = "Condición frente al IVA: Monotributista";
 
         String codigo = "Codigo";
         String nombre = "Nombre";
@@ -76,7 +61,7 @@ public class PDF_generator extends AppCompatActivity {
 
         String subtotaldescuento = "Subtotal Desc";
         String precio1 = "$";
-        String precio2 = "$";
+        String precio2 = "$"+sumartotal;
         String total = "Total";
 
 
@@ -132,11 +117,48 @@ public class PDF_generator extends AppCompatActivity {
         canvas.drawText(descuento, 441, 418, paint);
         canvas.drawText(subtotal, 520, 418, paint);
 
+
+        //datos
+
+        String ID = "";
+        String Nombre= "";
+        String Precio= "";
+        String Cantidad= "";
+        String Descuento= "";
+        String Total= "";
+
+        int valor = 0;
+        for (int i = 0;i<11;i++){
+        ID = tablita.get(i).get(0);
+        Nombre = tablita.get(i).get(1);
+        Precio = tablita.get(i).get(2);
+        Cantidad = tablita.get(i).get(3);
+        Descuento = tablita.get(i).get(4);
+        Total = tablita.get(i).get(5);
+
+        canvas.drawText(ID, 0, 460+valor, paint);
+        canvas.drawLine(0,470+valor,595,470+valor,paint);
+
+        canvas.drawText(Nombre, 127, 460+valor, paint);
+
+        canvas.drawText(Precio, 290, 460+valor, paint);
+        canvas.drawText(Cantidad, 366, 460+valor, paint);
+        canvas.drawText(Descuento, 441, 460+valor, paint);
+        canvas.drawText(Total, 520, 460+valor, paint);
+        valor = valor+30;
+        Toast.makeText(context, "VALOR:"+valor, Toast.LENGTH_LONG).show();
+        }
+
+
+
         //totales
         canvas.drawText(subtotaldescuento, 280, 800, paint);
         canvas.drawText(precio1, 366, 800, paint);
         canvas.drawText(total, 456, 800, paint);
         canvas.drawText(precio2, 521, 800, paint);
+
+
+
 
 
 
@@ -170,7 +192,7 @@ public class PDF_generator extends AppCompatActivity {
             contentValues.put(MediaStore.Downloads.IS_PENDING, 1);                           // Marcamos el archivo como pendiente para escribirlo
 
             // Obtenemos el ContentResolver para interactuar con el almacenamiento
-            ContentResolver resolver = getContentResolver();
+            ContentResolver resolver = context.getContentResolver();
 
             // Insertamos un nuevo registro en MediaStore para el archivo PDF
             Uri uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues);
@@ -191,19 +213,19 @@ public class PDF_generator extends AppCompatActivity {
                 resolver.update(uri, contentValues, null, null);
 
                 // Mostramos mensaje de éxito al usuario
-                Toast.makeText(this, "PDF guardado en Downloads (Android 10+)", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "PDF guardado en Downloads (Android 10+)", Toast.LENGTH_LONG).show();
             } catch (IOException e) {
                 // En caso de error, mostramos mensaje con el detalle
-                Toast.makeText(this, "Error al guardar PDF: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Error al guardar PDF: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
 
         } else {
             // Para Android 9 o inferior (API < 29), guardamos directamente en carpeta pública Downloads
             // Primero verificamos si tenemos permiso para escribir en almacenamiento externo
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                 // Si no tenemos permiso, lo solicitamos y salimos para esperar la respuesta del usuario
-                ActivityCompat.requestPermissions(this,
+                ActivityCompat.requestPermissions((Activity) context,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
                 return; // Salimos para esperar la respuesta del permiso
             }
@@ -225,10 +247,10 @@ public class PDF_generator extends AppCompatActivity {
                 fos.close();
 
                 // Mensaje de éxito para el usuario
-                Toast.makeText(this, "PDF guardado en Downloads (Android 9 o menor)", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "PDF guardado en Downloads (Android 9 o menor)", Toast.LENGTH_LONG).show();
             } catch (IOException e) {
                 // Mensaje de error si algo sale mal
-                Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
 

@@ -138,6 +138,7 @@ public class Clientes2 extends AppCompatActivity {
     }
 
     public void agregar(View v){
+
         SQLiteDatabase db = admin.getWritableDatabase();
         ContentValues registro = new ContentValues();
 

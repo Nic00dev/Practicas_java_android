@@ -1,5 +1,7 @@
 package com.example.ejerciciofacturacion;
-
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -24,18 +26,26 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 public class Facturar extends AppCompatActivity {
     private AdminSQLiteOpenHelper admin;
     private EditText c1,c2,c3,c4,c5,c6;
     private Button Resultado_total;
     private TableLayout tabla;
+    private ArrayList<ArrayList<String>> Tablapdf = new ArrayList<>();
     private String[] datos;
+    private PDF_generator pdf_generar;
+    private String suma;
+
 
 
     @SuppressLint("MissingInflatedId")
@@ -53,6 +63,19 @@ public class Facturar extends AppCompatActivity {
         c6 = findViewById(R.id.Campo6);
         tabla = findViewById(R.id.tb);
         Resultado_total = findViewById(R.id.resul);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+
+                return; // salís y esperás la respuesta del usuario
+            }
+        }
+
+        pdf_generar = new PDF_generator();//importo la clase
         TextWatcher sumar = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -105,7 +128,7 @@ public class Facturar extends AppCompatActivity {
 
     public void consulta (){
         SQLiteDatabase db = admin.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select ID,Nombre,Precio,Cantidad,Descuento,Total from ventas where Visible = 1",null);; // agregar
+        Cursor cursor = db.rawQuery("select ID,Nombre,Precio,Cantidad,Descuento,Total from ventas where (Visible = 1 AND Cantidad > 0)",null);; // agregar
 
         int ID;
         String Nombre;
@@ -160,6 +183,17 @@ public class Facturar extends AppCompatActivity {
     }
 
     public void agregar (View v){
+        if (c1.getText().toString().trim().isEmpty()) {
+            c1.setText("1");}
+        if (c2.getText().toString().trim().isEmpty()) {
+            c2.setText("1");}
+        if (c3.getText().toString().trim().isEmpty()) {
+            c3.setText("1");}
+        if (c4.getText().toString().trim().isEmpty()) {
+            c4.setText("0");}
+        if (c5.getText().toString().trim().isEmpty()) {
+            c5.setText("1");}
+
         SQLiteDatabase bd = admin.getWritableDatabase();
         ContentValues registro = new ContentValues();
 
@@ -212,6 +246,16 @@ public class Facturar extends AppCompatActivity {
 
     }
     public void borrartodo (View v){
+        if (c1.getText().toString().trim().isEmpty()) {
+            c1.setText("1");}
+        if (c2.getText().toString().trim().isEmpty()) {
+            c2.setText("1");}
+        if (c3.getText().toString().trim().isEmpty()) {
+            c3.setText("1");}
+        if (c4.getText().toString().trim().isEmpty()) {
+            c4.setText("0");}
+        if (c5.getText().toString().trim().isEmpty()) {
+            c5.setText("1");}
         SQLiteDatabase bd = admin.getWritableDatabase();
         ContentValues registro = new ContentValues();
         //int desc = des1.getText().toString();
@@ -227,20 +271,73 @@ public class Facturar extends AppCompatActivity {
 
     }
 
+    @SuppressLint("ResourceType")
     public void cobro (View v){
+        if (c1.getText().toString().trim().isEmpty()) {
+            c1.setText("1");}
+        if (c2.getText().toString().trim().isEmpty()) {
+            c2.setText("1");}
+        if (c3.getText().toString().trim().isEmpty()) {
+            c3.setText("1");}
+        if (c4.getText().toString().trim().isEmpty()) {
+            c4.setText("1");}
+        if (c5.getText().toString().trim().isEmpty()) {
+            c5.setText("1");}
+        consulta();
         SQLiteDatabase db = admin.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT SUM(Total) FROM ventas WHERE Visible = 1", null);
 
+        Cursor cursor_pdf = db.rawQuery("select ID,Nombre,Precio,Cantidad,Descuento,Total from ventas where (Visible = 1 AND Cantidad > 0)", null);
+
         if (cursor.moveToFirst()) {
-            String suma = cursor.getString(0); // puede ser null si no hay filas
+            suma = cursor.getString(0); // puede ser null si no hay filas
             Resultado_total.setText(suma != null ? suma : "0");
         } else {
             Resultado_total.setText("0");
         }
 
+        int ID;
+        String Nombre;
+        int Precio;
+        int Cantidad;
+        int Descuento;
+        double Total;
+        if(cursor_pdf.moveToFirst()){
+            do{
+
+
+                    ArrayList<String> fila = new ArrayList<>(); //generas una fila
+                    ID = cursor_pdf.getInt(0);
+                    Nombre = cursor_pdf.getString(1);
+                    Precio = cursor_pdf.getInt(2);
+                    Cantidad= cursor_pdf.getInt(3);
+                    Descuento = cursor_pdf.getInt(4);
+                    Total = cursor_pdf.getDouble(5);
+
+                    fila.add(String.valueOf(ID));
+                    fila.add(String.valueOf(Nombre));
+                    fila.add(String.valueOf(Precio));
+                    fila.add(String.valueOf(Cantidad));
+                    fila.add(String.valueOf(Descuento));
+                    fila.add(String.valueOf(Total));
+
+
+                    Tablapdf.add(fila); //agregas a la tabla
+
+
+                }while(cursor_pdf.moveToNext());
+
+        }
         cursor.close();
-        db.close();
+        cursor_pdf.close();
+        Toast.makeText(this, "Error: "+ Tablapdf.get(2).get(0), Toast.LENGTH_LONG).show();
+
+        String texto = "c";
+
+        pdf_generar.crearPDF(this,texto,Tablapdf,suma);
+
     }
+
 
 
 }
