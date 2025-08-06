@@ -235,7 +235,7 @@ public class Facturar extends AppCompatActivity {
         //int desc = des1.getText().toString();
         registro.put("Nombre",c2.getText().toString());
         registro.put("Precio",Integer.parseInt(c3.getText().toString()));
-        registro.put("Cantidad",Integer.parseInt(c4.getText().toString()));
+        registro.put("Cantidad",0);
         registro.put("Descuento",Integer.parseInt(c5.getText().toString()));
         registro.put("Total",Double.parseDouble(c6.getText().toString()));
         registro.put ("Visible",0);
@@ -261,7 +261,7 @@ public class Facturar extends AppCompatActivity {
         //int desc = des1.getText().toString();
         registro.put("Nombre",c2.getText().toString());
         registro.put("Precio",Integer.parseInt(c3.getText().toString()));
-        registro.put("Cantidad",Integer.parseInt(c4.getText().toString()));
+        registro.put("Cantidad",0);
         registro.put("Descuento",Integer.parseInt(c5.getText().toString()));
         registro.put("Total",Double.parseDouble(c6.getText().toString()));
         registro.put ("Visible",0);
@@ -273,6 +273,7 @@ public class Facturar extends AppCompatActivity {
 
     @SuppressLint("ResourceType")
     public void cobro (View v){
+        Tablapdf.clear();
         if (c1.getText().toString().trim().isEmpty()) {
             c1.setText("1");}
         if (c2.getText().toString().trim().isEmpty()) {
@@ -285,7 +286,7 @@ public class Facturar extends AppCompatActivity {
             c5.setText("1");}
         consulta();
         SQLiteDatabase db = admin.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT SUM(Total) FROM ventas WHERE Visible = 1", null);
+        Cursor cursor = db.rawQuery("SELECT SUM(Total) FROM ventas WHERE (Visible = 1 AND Cantidad > 0)", null);
 
         Cursor cursor_pdf = db.rawQuery("select ID,Nombre,Precio,Cantidad,Descuento,Total from ventas where (Visible = 1 AND Cantidad > 0)", null);
 
