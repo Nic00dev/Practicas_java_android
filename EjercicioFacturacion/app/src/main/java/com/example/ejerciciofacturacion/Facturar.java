@@ -1,5 +1,6 @@
 package com.example.ejerciciofacturacion;
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.annotation.SuppressLint;
@@ -336,6 +337,34 @@ public class Facturar extends AppCompatActivity {
         String texto = "c";
 
         pdf_generar.crearPDF(this,texto,Tablapdf,suma);
+
+    }
+    public void pestania_inventarios(View v){
+        Intent intento = new Intent(this, MainActivity.class);
+        startActivity(intento);
+        finish();
+
+
+    }
+
+    public void Pestania_clientes(View v){
+        Intent intento = new Intent(this,Clientes2.class);
+        startActivity(intento);
+        finish();
+
+
+    }
+    public void Pestania_proveedores(View v){
+        Intent intento = new Intent(this, Proveedores2.class);
+        startActivity(intento);
+        finish();
+
+
+
+    }
+    public void cerrar_sesion(View v){
+        finish();
+
 
     }
 

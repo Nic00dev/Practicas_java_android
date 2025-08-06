@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="numberSigned" />
 
         <Button
             android:id="@+id/button10"

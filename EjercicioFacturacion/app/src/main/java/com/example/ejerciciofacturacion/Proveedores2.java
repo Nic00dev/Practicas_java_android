@@ -30,9 +30,9 @@ public class Proveedores2 extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_proveedores2);
         admin = new AdminSQLiteOpenHelper(this,"bd1",null,1);
-        c1 = findViewById(R.id.Campo1);
+        c1 = findViewById(R.id.fcampo1);
         c2 = findViewById(R.id.Campo2);
-        c3 = findViewById(R.id.Campo3);
+        c3 = findViewById(R.id.fcampo3);
         c4 = findViewById(R.id.Campo4);
         tabla = findViewById(R.id.tb);
         consulta();
@@ -57,6 +57,8 @@ public class Proveedores2 extends AppCompatActivity {
     public void Pestania_facturacion(View v){
         Intent intento = new Intent(this,Facturar.class);
         startActivity(intento);
+        finish();
+
 
 
     }
@@ -116,6 +118,14 @@ public class Proveedores2 extends AppCompatActivity {
     }
 
     public void agregar(View v){
+        if (c1.getText().toString().trim().isEmpty()) {
+            c1.setText("1");}
+        if (c2.getText().toString().trim().isEmpty()) {
+            c2.setText("1");}
+        if (c3.getText().toString().trim().isEmpty()) {
+            c3.setText("9999");}
+        if (c4.getText().toString().trim().isEmpty()) {
+            c4.setText("1");}
         SQLiteDatabase db = admin.getWritableDatabase();
         ContentValues registro = new ContentValues();
         //registro.put("ID_Proveedor",c1.getText().toString());

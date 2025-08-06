@@ -34,7 +34,7 @@ public class Clientes2 extends AppCompatActivity {
         c0 = findViewById(R.id.campo0);
         c1 = findViewById(R.id.Campo1);
         c2 = findViewById(R.id.Campo2);
-        c3 = findViewById(R.id.Campo3);
+        c3 = findViewById(R.id.Ccampo3);
         c4 = findViewById(R.id.Campo4);
         tabla = findViewById(R.id.tbc);
         consulta();
@@ -138,6 +138,14 @@ public class Clientes2 extends AppCompatActivity {
     }
 
     public void agregar(View v){
+        if (c1.getText().toString().trim().isEmpty()) {
+            c1.setText("1");}
+        if (c2.getText().toString().trim().isEmpty()) {
+            c2.setText("1");}
+        if (c3.getText().toString().trim().isEmpty()) {
+            c3.setText("9999");}
+        if (c4.getText().toString().trim().isEmpty()) {
+            c4.setText("1");}
 
         SQLiteDatabase db = admin.getWritableDatabase();
         ContentValues registro = new ContentValues();
@@ -198,12 +206,14 @@ public class Clientes2 extends AppCompatActivity {
 
 
     }
-        public void Pestania_facturacion(View v){
+    public void Pestania_facturacion(View v){
            Intent intento = new Intent(this,Facturar.class);
            startActivity(intento);
+            finish();
 
 
-   }
+
+        }
     public void cerrar_sesion(View v){
         finish();
 

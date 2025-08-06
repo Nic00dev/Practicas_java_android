@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="numberSigned" />
 
     </LinearLayout>
 
@@ -155,12 +155,12 @@
             android:text="Dni" />
 
         <EditText
-            android:id="@+id/Campo3"
+            android:id="@+id/Ccampo3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="numberSigned" />
 
     </LinearLayout>
 

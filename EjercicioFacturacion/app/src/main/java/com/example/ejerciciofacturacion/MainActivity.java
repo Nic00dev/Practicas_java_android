@@ -97,6 +97,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void agregar (){
+        if (nom1.getText().toString().trim().isEmpty()) {
+            nom1.setText("1");}
+        if (pre1.getText().toString().trim().isEmpty()) {
+            pre1.setText("1");}
+        if (cant1.getText().toString().trim().isEmpty()) {
+            cant1.setText("1");}
+        if (des1.getText().toString().trim().isEmpty()) {
+            des1.setText("9999");}
+
         SQLiteDatabase bd = admin.getWritableDatabase();
         ContentValues registro = new ContentValues();
 
@@ -218,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
     public void Pestania_facturacion(View v){
         Intent intento = new Intent(this,Facturar.class);
         startActivity(intento);
+        finish();
 
 
     }

@@ -74,12 +74,13 @@
             android:text="ID" />
 
         <EditText
-            android:id="@+id/Campo1"
+            android:id="@+id/fcampo1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="numberSigned" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -116,12 +117,12 @@
             android:text="CUIT" />
 
         <EditText
-            android:id="@+id/Campo3"
+            android:id="@+id/fcampo3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="numberSigned" />
 
     </LinearLayout>
 
