@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class Adaptador_lista extends RecyclerView.Adapter<Adaptador_lista.Viewholder> {
@@ -34,53 +34,52 @@ public class Adaptador_lista extends RecyclerView.Adapter<Adaptador_lista.Viewho
 
     @Override
     public void onBindViewHolder(@NonNull Viewholder holder, int position) {
+        int index = position * 3;
 
-        int index = position * 3; // Primer item del grupo
-
-        // Primer item
         if (index < lista_pokemon.size()) {
             Items item1 = lista_pokemon.get(index);
-            holder.Nombre_pokemon_1.setText(item1.getNombre1());
-            holder.imagen_pokemon_1.setImageResource(item1.getImagen1());
+            holder.Nombre_pokemon_1.setText(item1.getNombre());
+            Glide.with(holder.itemView.getContext())
+                    .load(item1.getImagenUrl())
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .into(holder.imagen_pokemon_1);
         }
 
-        // Segundo item
         if (index + 1 < lista_pokemon.size()) {
             Items item2 = lista_pokemon.get(index + 1);
-            holder.Nombre_pokemon_2.setText(item2.getNombre1());
-            holder.imagen_pokemon_2.setImageResource(item2.getImagen1());
+            holder.Nombre_pokemon_2.setText(item2.getNombre());
+            Glide.with(holder.itemView.getContext())
+                    .load(item2.getImagenUrl())
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .into(holder.imagen_pokemon_2);
         }
 
-        // Tercer item
         if (index + 2 < lista_pokemon.size()) {
             Items item3 = lista_pokemon.get(index + 2);
-            holder.Nombre_pokemon_3.setText(item3.getNombre1());
-            holder.imagen_pokemon_3.setImageResource(item3.getImagen1());
+            holder.Nombre_pokemon_3.setText(item3.getNombre());
+            Glide.with(holder.itemView.getContext())
+                    .load(item3.getImagenUrl())
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .into(holder.imagen_pokemon_3);
         }
 
-        holder.imagen_pokemon_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = v.getContext();;
-                Intent intent = new Intent(context, Descripcion_pokemon.class);
-                context.startActivity(intent);
-            }
+        // Listeners
+        holder.imagen_pokemon_1.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, Descripcion_pokemon.class);
+            context.startActivity(intent);
         });
-        holder.imagen_pokemon_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = v.getContext();;
-                Intent intent = new Intent(context, Descripcion_pokemon.class);
-                context.startActivity(intent);
-            }
+
+        holder.imagen_pokemon_2.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, Descripcion_pokemon.class);
+            context.startActivity(intent);
         });
-        holder.imagen_pokemon_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = v.getContext();;
-                Intent intent = new Intent(context, Descripcion_pokemon.class);
-                context.startActivity(intent);
-            }
+
+        holder.imagen_pokemon_3.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, Descripcion_pokemon.class);
+            context.startActivity(intent);
         });
     }
 
@@ -103,9 +102,9 @@ public class Adaptador_lista extends RecyclerView.Adapter<Adaptador_lista.Viewho
             Nombre_pokemon_1= itemView.findViewById(R.id.textView);
             Nombre_pokemon_2=itemView.findViewById(R.id.textView2);
             Nombre_pokemon_3=itemView.findViewById(R.id.textView3);
-            imagen_pokemon_1= itemView.findViewById(R.id.imageView2);
+            imagen_pokemon_3= itemView.findViewById(R.id.imageView2);
             imagen_pokemon_2= itemView.findViewById(R.id.imageView3);
-            imagen_pokemon_3= itemView.findViewById(R.id.imageView4);
+            imagen_pokemon_1= itemView.findViewById(R.id.imageView4);
 
 
 

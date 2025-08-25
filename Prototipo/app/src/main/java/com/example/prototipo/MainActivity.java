@@ -18,7 +18,20 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,36 +55,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         lista_pokemon = new ArrayList<>();
-        lista_pokemon.add(new Items("Ítem 1", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 2", R.drawable.ic_launcher_background));
-        lista_pokemon.add(new Items("Ítem 3", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 4", R.drawable.ic_launcher_background));
-        lista_pokemon.add(new Items("Ítem 5", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 6", R.drawable.ic_launcher_background));
-        lista_pokemon.add(new Items("Ítem 7", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 8", R.drawable.ic_launcher_background));
-        lista_pokemon.add(new Items("Ítem 9", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 10", R.drawable.ic_launcher_background));
-        lista_pokemon.add(new Items("Ítem 11", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 12", R.drawable.ic_launcher_background));
-        lista_pokemon.add(new Items("Ítem 13", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 14", R.drawable.ic_launcher_background));
-        lista_pokemon.add(new Items("Ítem 15", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 16", R.drawable.ic_launcher_background));
-        lista_pokemon.add(new Items("Ítem 17", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 18", R.drawable.ic_launcher_background));
-        lista_pokemon.add(new Items("Ítem 19", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 20", R.drawable.ic_launcher_background));
-        lista_pokemon.add(new Items("Ítem 21", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 22", R.drawable.ic_launcher_background));
-        lista_pokemon.add(new Items("Ítem 23", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 24", R.drawable.ic_launcher_background));
-        lista_pokemon.add(new Items("Ítem 25", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 26", R.drawable.ic_launcher_background));
-        lista_pokemon.add(new Items("Ítem 27", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 28", R.drawable.ic_launcher_background));
-        lista_pokemon.add(new Items("Ítem 29", R.drawable.ic_launcher_foreground));
-        lista_pokemon.add(new Items("Ítem 30", R.drawable.ic_launcher_background));;
+        cargarPokemons();
         adapter = new Adaptador_lista(lista_pokemon);
         recyclerView.setAdapter(adapter);
 
@@ -89,13 +73,86 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int nro = item.getItemId();
         if (nro == R.id.Ordenar_nombre){
-            Toast.makeText(this,"este es el nombre",Toast.LENGTH_LONG).show();
+            Collections.sort(lista_pokemon, new Comparator<Items>() {
+                @Override
+                public int compare(Items a, Items b) {
+                    return a.getNombre().compareToIgnoreCase(b.getNombre());
+                }
+            });
+            adapter.notifyDataSetChanged(); // refresca el RecyclerView
         }
         else if (nro == R.id.Ordenar_id){
-            Toast.makeText(this,"este es el id",Toast.LENGTH_LONG).show();
+            Collections.sort(lista_pokemon, new Comparator<Items>() {
+                @Override
+                public int compare(Items a, Items b) {
+                    return Integer.parseInt(a.getId()) - Integer.parseInt(b.getId());
+                }
+            });
+            adapter.notifyDataSetChanged(); // refresca el RecyclerView
         }
         return true;
     }
+
+    public void cargarPokemons() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://pokeapi.co/api/v2/pokemon?limit=153"; // primeros 21
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray results = response.getJSONArray("results");
+                            for (int i = 0; i < results.length(); i++) {
+                                JSONObject pokemonJson = results.getJSONObject(i);
+                                String name = pokemonJson.getString("name");
+                                String detailUrl = pokemonJson.getString("url"); // URL del detalle del Pokémon
+                                // Ahora hacemos otro request para sacar la imagen
+                                JsonObjectRequest detailRequest = new JsonObjectRequest(
+                                        Request.Method.GET, detailUrl, null,
+                                        new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject detailResponse) {
+                                                try {
+                                                    String imageUrl = detailResponse
+                                                            .getJSONObject("sprites")
+                                                            .getJSONObject("other")
+                                                            .getJSONObject("official-artwork")
+                                                            .getString("front_default");
+                                                            String id = detailResponse.getString("id");
+
+                                                    lista_pokemon.add(new Items(name, imageUrl,id));
+                                                    adapter.notifyDataSetChanged();
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        },
+                                        new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                error.printStackTrace();
+                                            }
+                                        });
+
+                                queue.add(detailRequest);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+        queue.add(request);
+    }
+
 
 
 }

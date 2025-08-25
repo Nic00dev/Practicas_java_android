@@ -39,10 +39,7 @@ public class Descripcion_pokemon extends AppCompatActivity {
         return true;
     }
 
-    public void regresar(View v){
-        finish();
 
-    }
 
 
 }
