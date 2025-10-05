@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageButton
+        android:id="@+id/perro"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="181dp"
+        android:onClick="dog"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toStartOf="@+id/gato"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/perro" />
+
+    <ImageButton
+        android:id="@+id/gato"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="43dp"
+        android:onClick="cat"
+        app:layout_constraintBottom_toTopOf="@+id/resul"
+        app:layout_constraintEnd_toStartOf="@+id/cabra"
+        app:layout_constraintStart_toEndOf="@+id/perro"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/gatito" />
+
+    <ImageButton
+        android:id="@+id/cabra"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="48dp"
+        android:onClick="cow"
+        app:layout_constraintBottom_toTopOf="@+id/resul"
+        app:layout_constraintEnd_toStartOf="@+id/dragon"
+        app:layout_constraintStart_toEndOf="@+id/gato"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cabrasatan" />
+
+    <ImageButton
+        android:id="@+id/dragon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="355dp"
+        android:onClick="drake"
+        app:layout_constraintBottom_toTopOf="@+id/enviar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cabra"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dragon" />
+
+    <ImageView
+        android:id="@+id/resul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="477dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dragon"
+        app:layout_constraintTop_toBottomOf="@+id/gato"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginBottom="35dp"
+        android:text="Descripcion"
+        app:layout_constraintBottom_toTopOf="@+id/describe"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/perro" />
+
+    <TextView
+        android:id="@+id/describe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginBottom="373dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/enviar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="73dp"
+        android:layout_marginBottom="226dp"
+        android:onClick="envio"
+        android:text="Enviar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dragon" />
+</androidx.constraintlayout.widget.ConstraintLayout>
